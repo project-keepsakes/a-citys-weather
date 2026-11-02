@@ -162,6 +162,17 @@ describe("A City's Weather", () => {
     });
   });
 
+  it("recognizes the provider's location-not-found response even with HTTP 500", () => {
+    cy.intercept("GET", "https://wttr.in/Unknown?format=j1&lang=en", {
+      statusCode: 500,
+      body: "location not found: upstream error: opencage: invalid response\n",
+    }).as("unknownWeather");
+    cy.get("#city").type("Unknown").type("{enter}");
+    cy.wait("@unknownWeather");
+    cy.get("#cityName").should("have.text", "We couldn't find weather for “Unknown.” Check the spelling and try again.");
+    cy.get("#weather_button").should("not.be.disabled");
+  });
+
   it("distinguishes a city that cannot be found", () => {
     cy.intercept("GET", "https://wttr.in/Nowhere?format=j1&lang=en", {
       statusCode: 404,
