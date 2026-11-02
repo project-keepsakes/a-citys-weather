@@ -34,6 +34,7 @@ const translations = {
     loadingWeather: "Loading weather for {city}…",
     notFound: "We couldn't find weather for “{city}.” Check the spelling and try again.",
     incomplete: "Weather details for “{city}” are incomplete. Please try again later.",
+    requestFailed: "We couldn't load weather for “{city}.” Check the city spelling and your connection, or try again later.",
     serviceUnavailable: "The weather service is unavailable right now. Please try again.",
   },
   es: {
@@ -68,6 +69,7 @@ const translations = {
     minimumTemperature: "Temp. mín.:",
     loadingWeather: "Cargando el clima de {city}…",
     notFound: "No encontramos el clima de “{city}”. Revisa la ortografía e inténtalo de nuevo.",
+    requestFailed: "No pudimos cargar el clima de “{city}”. Revisa el nombre de la ciudad y tu conexión, o inténtalo más tarde.",
     incomplete: "Los datos meteorológicos de “{city}” están incompletos. Inténtalo más tarde.",
     serviceUnavailable: "El servicio meteorológico no está disponible en este momento. Inténtalo de nuevo.",
   },
@@ -103,6 +105,7 @@ const translations = {
     minimumTemperature: "Thấp nhất:",
     loadingWeather: "Đang tải thời tiết cho {city}…",
     notFound: "Không tìm thấy thời tiết cho “{city}”. Hãy kiểm tra tên và thử lại.",
+    requestFailed: "Không thể tải thời tiết cho “{city}”. Hãy kiểm tra tên thành phố và kết nối mạng, hoặc thử lại sau.",
     incomplete: "Dữ liệu thời tiết cho “{city}” chưa đầy đủ. Vui lòng thử lại sau.",
     serviceUnavailable: "Dịch vụ thời tiết hiện không khả dụng. Vui lòng thử lại.",
   },

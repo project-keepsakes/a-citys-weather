@@ -434,9 +434,14 @@ function renderWeather(city, weather, { isSecret = false } = {}) {
 }
 
 async function fetchWeather(city) {
-  const response = await fetch(
-    `https://wttr.in/${encodeURIComponent(city)}?format=j1&lang=${state.locale}`,
-  );
+  let response;
+  try {
+    response = await fetch(
+      `https://wttr.in/${encodeURIComponent(city)}?format=j1&lang=${state.locale}`,
+    );
+  } catch {
+    throw new WeatherError("request", "The browser could not read the weather response.");
+  }
   const body = await response.text();
   if (response.status === 404 || (!response.ok && /^location not found\b/i.test(body.trim()))) {
     throw new WeatherError("not-found", `No weather was found for ${city}.`);
@@ -449,7 +454,12 @@ async function fetchWeather(city) {
 
 function showWeatherError(error, city) {
   console.error(error);
-  if (error instanceof WeatherError && error.kind === "not-found") {
+  if (error instanceof WeatherError && error.kind === "request") {
+    showMessage(t("requestFailed", { city }), {
+      isError: true,
+      stateName: "error",
+    });
+  } else if (error instanceof WeatherError && error.kind === "not-found") {
     showMessage(t("notFound", { city }), {
       isError: true,
       stateName: "error",

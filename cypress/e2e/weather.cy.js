@@ -173,6 +173,14 @@ describe("A City's Weather", () => {
     cy.get("#weather_button").should("not.be.disabled");
   });
 
+  it("does not claim an outage when the browser cannot read a response", () => {
+    cy.intercept("GET", "https://wttr.in/Blocked?format=j1&lang=en", { forceNetworkError: true }).as("blockedWeather");
+    cy.get("#city").type("Blocked").type("{enter}");
+    cy.wait("@blockedWeather");
+    cy.get("#cityName").should("have.text", "We couldn't load weather for “Blocked.” Check the city spelling and your connection, or try again later.");
+    cy.get("#weather_button").should("not.be.disabled");
+  });
+
   it("distinguishes a city that cannot be found", () => {
     cy.intercept("GET", "https://wttr.in/Nowhere?format=j1&lang=en", {
       statusCode: 404,
