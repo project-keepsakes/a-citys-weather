@@ -437,13 +437,14 @@ async function fetchWeather(city) {
   const response = await fetch(
     `https://wttr.in/${encodeURIComponent(city)}?format=j1&lang=${state.locale}`,
   );
-  if (response.status === 404) {
+  const body = await response.text();
+  if (response.status === 404 || (!response.ok && /^location not found\b/i.test(body.trim()))) {
     throw new WeatherError("not-found", `No weather was found for ${city}.`);
   }
   if (!response.ok) {
     throw new WeatherError("service", `Weather request failed with status ${response.status}.`);
   }
-  return response.json();
+  return JSON.parse(body);
 }
 
 function showWeatherError(error, city) {
